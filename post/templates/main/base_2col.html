@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title1</title>
+</head>
+<body>
+{% block page %}
+
+<div class="row">
+	<div class="col-md-9">
+	<div class="well" >{% block content %}
+        {% endblock %}</div>
+    </div>
+
+   <div class="col-md-3">
+
+	{% block sidebar %}
+
+
+<div class="well">
+
+
+<ul>
+	{% for art in arti %}
+    <li><a href="{% url 'detail_article' art.id %}"> {{ art.name }} </a> </li>
+
+	{% endfor %}
+
+</ul>
+
+
+
+</div>
+	{% endblock %}
+
+   </div>
+</div>
+{% endblock %}
+</body>
+</html>
