@@ -31,6 +31,7 @@ class Article(models.Model):
     content = RichTextUploadingField('Контент', blank=True, default='')
     category = models.ForeignKey(Category, related_name='categores', verbose_name='категория')
     created = models.DateTimeField('дата добавления', auto_now_add=True)
+    likes = models.IntegerField('лайки', default=0, editable=False) #editable - не будет отображаться в админке
 
     class Meta:
         verbose_name = 'Статья'
@@ -39,6 +40,19 @@ class Article(models.Model):
 
     def __str__(self):
         return self.name
+
+class Comments(models.Model):
+    comments_text = models.TextField(verbose_name='комментарий')
+    comments_aricle = models.ForeignKey(Article,related_name='article')
+
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+
+    def __str__(self):
+        return self.comments_text
+
 
 
 

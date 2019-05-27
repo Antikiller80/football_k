@@ -1,6 +1,10 @@
-from django.shortcuts import render
-from .models import Article, Category
+from django.shortcuts import render, redirect
+from .models import Article, Category, Comments
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.exceptions import ObjectDoesNotExist
+from django.http.response import Http404
+from .forms import CommentForm
+from django.contrib import auth
 
 
 def detail_category(request, id=None):
@@ -10,9 +14,13 @@ def detail_category(request, id=None):
 
 
 def detail_article(request, id=None):
-    article = Article.objects.get(id=id)
-    context = {'article': article}
-    return render(request, 'blog/detail_article.html', context)
+    comment_form = CommentForm
+    args = {}
+    args ['article'] = Article.objects.get(id=id)
+    args ['comments'] = Comments.objects.filter(comments_aricle_id=id)
+    args ['form'] = comment_form
+    args['username'] = auth.get_user(request).username
+    return render(request, 'blog/detail_article.html', args)
 
 
 def index_2(request):
@@ -28,3 +36,31 @@ def index_2(request):
     context = {'artiii': artiii}
     return render(request, 'blog/index_2.html', context)
 
+
+def addlike(request, id):
+    try:
+        if id in request.COOKIES: #проверка куки файлов, если есть инфа, то просто обновление
+            redirect('/')
+        else: # нету инфы - добавляется лайк
+            article = Article.objects.get(id=id)
+            article.likes +=1
+            article.save()
+            response = redirect('/')
+            response.set_cookie(id, 'test')
+            print(response)
+            return response
+    except ObjectDoesNotExist:
+        raise Http404
+    return redirect('/')
+
+
+def addcomment(request, id=None):
+    if request.POST and ("pause" not in request.session): #добавление комментария с разницой в 1 минуту через сессию
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.comments_aricle = Article.objects.get(id=id)
+            form.save()
+            request.session.set_expiry(60)
+            request.session['pause'] = True
+    return redirect('/post/article/%s/' % id)

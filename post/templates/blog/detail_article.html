@@ -22,4 +22,16 @@
 {{ article.match.home_club }} {{ article.match.goals_home }}  {{ article.match.goals_guest }} {{ article.match.guest_club }}
 {{ article.content|safe }} <br>
 <b>Автор:{{ article.author }}</b>
+
+<p>Комментарии:</p>
+ {% for comment in comments %}
+<p> {{ comment.comments_text }}</p>
+{% endfor %}
+{% if username %}
+<form action="/post/addcomment/{{ article.id }}/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" class="btn" value="Добавить комментарий">
+</form>
+{% endif %}
 {% endblock %}

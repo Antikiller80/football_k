@@ -23,6 +23,7 @@ from post import views
 urlpatterns = [
     url(r'^$', views.index_2, name='index_2'),
     url(r'^post/', include('post.urls')),
+    url(r'^auth/', include('loginsys.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'post',
     'ckeditor',
     'ckeditor_uploader',
+    'loginsys',
 ]
 
 MIDDLEWARE = [
