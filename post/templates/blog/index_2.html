@@ -28,6 +28,7 @@
     {{ article.category.name }}.{{ article.category.description }}  <br>
    {{ article.content|safe|truncatewords:"125" }}
     <a href="{% url 'detail_article' article.id %}"> Подробее.. </a><br>
+    <p>Дата публикации: {{ article.created }}</p>
     <p><a href="/post/addlike/{{ article.id  }}/"> <img src="{% static  'logo/like.png' %}" width="25px" height="25px"></a>  {{ article.likes }} </p>
     <center> <hr size="10" color="red" width=70% >   </center>
  </div>

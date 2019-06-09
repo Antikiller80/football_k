@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     {% block head %}
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap-theme.css' %}">
+   <!-- <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap-theme.css' %}">-->
     <script src="{% static 'bootstrap/jquery-3.2.1.min.js'%}"></script>
   <script src="{% static 'bootstrap/js/bootstrap.js'%}"></script>
-  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="https://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+ <!-- <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+     <!--<script src="https://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>-->
+   <!-- <script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script>-->
+   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
 	{% block title %}
     <title></title>
     {% endblock %}
@@ -55,7 +55,7 @@
 
         <ul class="nav navbar-nav navbar-right">
         <li><a href="{% url 'login' %}">{% if request.user.is_authenticated %}
-            <li><a href="{% url 'logout' %}">Выход</a></li>
+            <li><a href="{% url 'logout' %}">Выход {{ user }}</a></li>
 
 {% else %}
 Войти
@@ -130,6 +130,9 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
 
     </div>{% endblock %}
 {% endblock %}
+
+
     </div>
+
 </body>
 </html>

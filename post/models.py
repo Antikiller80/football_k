@@ -1,5 +1,7 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.contrib.auth.models import User
+from django import forms
 # убрал ненужные импорты
 
 
@@ -42,9 +44,10 @@ class Article(models.Model):
         return self.name
 
 class Comments(models.Model):
-    comments_text = models.TextField(verbose_name='комментарий')
+    comments_text = models.CharField(verbose_name='комментарий', max_length=400)
     comments_aricle = models.ForeignKey(Article,related_name='article')
-
+    comments_date = models.DateTimeField('дата добавления', auto_now_add=True)
+    comments_user = models.ForeignKey(User)
 
     class Meta:
         verbose_name = 'Комментарий'
@@ -52,7 +55,6 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.comments_text
-
 
 
 

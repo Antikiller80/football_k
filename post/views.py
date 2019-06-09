@@ -5,6 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import Http404
 from .forms import CommentForm
 from django.contrib import auth
+from django.contrib.auth.models import User
 
 
 def detail_category(request, id=None):
@@ -60,6 +61,7 @@ def addcomment(request, id=None):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.comments_aricle = Article.objects.get(id=id)
+            comment.comments_user_id = auth.get_user(request).id
             form.save()
             request.session.set_expiry(60)
             request.session['pause'] = True

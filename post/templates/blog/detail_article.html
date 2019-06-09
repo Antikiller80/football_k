@@ -15,6 +15,7 @@
 
 
   </style>
+
 <img src="{{ article.image.url }}" width="240px" height="240px" class="leftimg"/>
 
     <h3><b>{{ article.name }}</b></h3><br>
@@ -23,15 +24,31 @@
 {{ article.content|safe }} <br>
 <b>Автор:{{ article.author }}</b>
 
+<div class="well" >
+{% block com %}
+
+
 <p>Комментарии:</p>
  {% for comment in comments %}
+    <p>Автор {{ comment.comments_user.username }} </p>
+    <p>Дата: {{ comment.comments_date }} </p>
 <p> {{ comment.comments_text }}</p>
+    <hr>
 {% endfor %}
 {% if username %}
 <form action="/post/addcomment/{{ article.id }}/" method="post">
+    <div class="form-group">
     {% csrf_token %}
-    {{ form }}
+         {{ form  }}
+
     <input type="submit" class="btn" value="Добавить комментарий">
+          </div>
 </form>
 {% endif %}
+
+    {% endblock %}</div>
+
+
 {% endblock %}
+
+
